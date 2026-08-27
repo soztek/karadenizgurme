@@ -14,13 +14,13 @@ insert into public.site_settings (
   phone, whatsapp, address, working_hours, map_lat, map_lng,
   google_maps_url, yandex_maps_url, apple_maps_url, instagram_url, instagram_handle,
   direction_istanbul, direction_izmir, km_istanbul, km_izmir, entry_info, lost_found_phone,
-  seo_title, seo_description, og_image_url
+  seo_title, seo_description, og_image_url, show_prices
 )
 select 'İsmet Akbulut Karadeniz Gurme', 'Karadeniz Gurme', 'Karadeniz''in Lezzeti, Yolculuğun En Güzel Molası', 'Karadeniz''in Gerçek Lezzetleri Oksijen 266''da', 'İstanbul–İzmir Otoyolu üzerindeki Karadeniz Gurme''de yöresel yemekler, sıcacık bir sofra ve keyifli bir mola sizi bekliyor.', '/images/brand/logo.png',
   '0532 248 30 19', '0532 248 30 19', 'Oksijen 266, 12. Sokak No:191/A, Savaştepe / Balıkesir (İstanbul–İzmir Otoyolu)', 'Her gün 24 saat açık (7/24)', NULL, NULL,
   'https://www.google.com/maps/search/?api=1&query=Karadeniz+Gurme+Oksijen+266+Sava%C5%9Ftepe', '', '', 'https://www.instagram.com/karadenizgurmeoksijen266/', 'karadenizgurmeoksijen266',
   'İstanbul yönünden gelenler için ulaşım açıklaması yönetim panelinden girilecektir.', 'İzmir yönünden gelenler için ulaşım açıklaması yönetim panelinden girilecektir.', '', '', '', '',
-  'Karadeniz Gurme | Oksijen 266 – İstanbul İzmir Otoyolu Karadeniz Mutfağı', 'İstanbul–İzmir Otoyolu Oksijen 266''da Karadeniz Gurme; kuymak, pide, ızgara ve yöresel lezzetlerle yolculuğunuzun en güzel molası. Menü, yol tarifi ve iletişim.', '/images/hero/hero-1.png'
+  'Karadeniz Gurme | Oksijen 266 – İstanbul İzmir Otoyolu Karadeniz Mutfağı', 'İstanbul–İzmir Otoyolu Oksijen 266''da Karadeniz Gurme; kuymak, pide, ızgara ve yöresel lezzetlerle yolculuğunuzun en güzel molası. Menü, yol tarifi ve iletişim.', '/images/hero/hero-1.png', false
 where not exists (select 1 from public.site_settings);
 
 -- Kategoriler

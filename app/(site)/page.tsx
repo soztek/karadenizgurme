@@ -45,7 +45,7 @@ export default async function HomePage() {
       <Hero settings={settings} />
       <QuickAccess settings={settings} />
       {campaigns.length ? <CampaignBanner campaign={campaigns[0]} /> : null}
-      <FeaturedItems items={featured} />
+      <FeaturedItems items={featured} showPrices={settings.show_prices} />
       <WhyUs {...whyUs} />
       <StoryPreview {...story} />
       <Amenities {...amenities} />

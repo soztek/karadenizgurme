@@ -229,3 +229,4 @@ alter table public.site_settings add column if not exists km_istanbul text defau
 alter table public.site_settings add column if not exists km_izmir text default '';
 alter table public.site_settings add column if not exists entry_info text default '';
 alter table public.site_settings add column if not exists lost_found_phone text default '';
+alter table public.site_settings add column if not exists show_prices boolean default false;

@@ -6,7 +6,13 @@ import { MenuItemCard } from "@/components/site/MenuItemCard";
 import { ButtonLink } from "@/components/ui/Button";
 import type { MenuItemWithCategory } from "@/lib/types";
 
-export function FeaturedItems({ items }: { items: MenuItemWithCategory[] }) {
+export function FeaturedItems({
+  items,
+  showPrices = true,
+}: {
+  items: MenuItemWithCategory[];
+  showPrices?: boolean;
+}) {
   if (!items.length) return null;
   return (
     <section className="py-16 sm:py-20">
@@ -19,7 +25,7 @@ export function FeaturedItems({ items }: { items: MenuItemWithCategory[] }) {
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {items.slice(0, 8).map((item) => (
             <div key={item.id} className="relative">
-              <MenuItemCard item={item} />
+              <MenuItemCard item={item} showPrices={showPrices} />
               <Link
                 href={`/menu#kat-${item.category?.slug ?? ""}`}
                 className="absolute inset-0"

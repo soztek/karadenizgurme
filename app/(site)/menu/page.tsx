@@ -20,7 +20,11 @@ export default async function MenuPage() {
 
   return (
     <>
-      <MenuJsonLd groups={groups} businessName={settings.business_name} />
+      <MenuJsonLd
+        groups={groups}
+        businessName={settings.business_name}
+        showPrices={settings.show_prices}
+      />
       <BreadcrumbJsonLd
         items={[
           { name: "Ana Sayfa", url: "/" },
@@ -37,7 +41,7 @@ export default async function MenuPage() {
       />
       <Container className="py-10">
         {groups.length ? (
-          <MenuBrowser groups={groups} />
+          <MenuBrowser groups={groups} showPrices={settings.show_prices} />
         ) : (
           <p className="py-20 text-center text-charcoal/60">
             Menü içeriği yakında eklenecek.

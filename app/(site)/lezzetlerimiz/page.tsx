@@ -5,7 +5,7 @@ import { MenuItemCard } from "@/components/site/MenuItemCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { BreadcrumbJsonLd } from "@/components/site/JsonLd";
 import { ArrowRight } from "lucide-react";
-import { getMenuItems } from "@/lib/data";
+import { getMenuItems, getSettings } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Lezzetlerimiz",
@@ -15,11 +15,13 @@ export const metadata: Metadata = {
 };
 
 export default async function LezzetlerimizPage() {
-  const [featured, withPhotos] = await Promise.all([
+  const [featured, withPhotos, settings] = await Promise.all([
     getMenuItems({ featured: true }),
     getMenuItems(),
+    getSettings(),
   ]);
   const gallery = withPhotos.filter((i) => i.image_url).slice(0, 12);
+  const showPrices = settings.show_prices;
 
   return (
     <>
@@ -46,7 +48,7 @@ export default async function LezzetlerimizPage() {
             </h2>
             <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {featured.map((item) => (
-                <MenuItemCard key={item.id} item={item} />
+                <MenuItemCard key={item.id} item={item} showPrices={showPrices} />
               ))}
             </div>
           </>
@@ -59,7 +61,7 @@ export default async function LezzetlerimizPage() {
             </h2>
             <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {gallery.map((item) => (
-                <MenuItemCard key={item.id} item={item} />
+                <MenuItemCard key={item.id} item={item} showPrices={showPrices} />
               ))}
             </div>
           </>

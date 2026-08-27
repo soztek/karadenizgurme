@@ -45,9 +45,11 @@ export function LocalBusinessJsonLd({ settings }: { settings: SiteSettings }) {
 export function MenuJsonLd({
   groups,
   businessName,
+  showPrices = true,
 }: {
   groups: MenuGroup[];
   businessName: string;
+  showPrices?: boolean;
 }) {
   const data = {
     "@context": "https://schema.org",
@@ -61,7 +63,7 @@ export function MenuJsonLd({
         name: i.title,
         description: i.description || undefined,
         offers:
-          i.price != null
+          showPrices && i.price != null
             ? {
                 "@type": "Offer",
                 price: i.discount_price ?? i.price,

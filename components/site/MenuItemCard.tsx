@@ -45,7 +45,13 @@ export function ItemImage({
   );
 }
 
-export function MenuItemCard({ item }: { item: MenuItemWithCategory }) {
+export function MenuItemCard({
+  item,
+  showPrices = true,
+}: {
+  item: MenuItemWithCategory;
+  showPrices?: boolean;
+}) {
   const hasDiscount =
     item.discount_price != null &&
     item.price != null &&
@@ -82,22 +88,24 @@ export function MenuItemCard({ item }: { item: MenuItemWithCategory }) {
           <h3 className="text-lg font-semibold leading-tight text-brand">
             {item.title}
           </h3>
-          <div className="shrink-0 text-right">
-            {hasDiscount ? (
-              <>
-                <span className="block text-xs text-charcoal/40 line-through">
+          {showPrices ? (
+            <div className="shrink-0 text-right">
+              {hasDiscount ? (
+                <>
+                  <span className="block text-xs text-charcoal/40 line-through">
+                    {formatPrice(item.price)}
+                  </span>
+                  <span className="text-base font-bold text-mustard-600">
+                    {formatPrice(item.discount_price)}
+                  </span>
+                </>
+              ) : item.price != null ? (
+                <span className="text-base font-bold text-mustard-600">
                   {formatPrice(item.price)}
                 </span>
-                <span className="text-base font-bold text-mustard-600">
-                  {formatPrice(item.discount_price)}
-                </span>
-              </>
-            ) : item.price != null ? (
-              <span className="text-base font-bold text-mustard-600">
-                {formatPrice(item.price)}
-              </span>
-            ) : null}
-          </div>
+              ) : null}
+            </div>
+          ) : null}
         </div>
 
         {item.description ? (
@@ -106,7 +114,7 @@ export function MenuItemCard({ item }: { item: MenuItemWithCategory }) {
           </p>
         ) : null}
 
-        {item.price == null ? (
+        {showPrices && item.price == null ? (
           <p className="mt-1.5 text-xs italic text-charcoal/50">
             Güncel fiyat için lütfen sorunuz.
           </p>

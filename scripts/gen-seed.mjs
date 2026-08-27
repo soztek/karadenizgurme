@@ -41,13 +41,13 @@ insert into public.site_settings (
   phone, whatsapp, address, working_hours, map_lat, map_lng,
   google_maps_url, yandex_maps_url, apple_maps_url, instagram_url, instagram_handle,
   direction_istanbul, direction_izmir, km_istanbul, km_izmir, entry_info, lost_found_phone,
-  seo_title, seo_description, og_image_url
+  seo_title, seo_description, og_image_url, show_prices
 )
 select ${q(s.business_name)}, ${q(s.short_name)}, ${q(s.slogan)}, ${q(s.hero_title)}, ${q(s.hero_subtitle)}, ${q(s.logo_url)},
   ${q(s.phone)}, ${q(s.whatsapp)}, ${q(s.address)}, ${q(s.working_hours)}, ${num(s.map_lat)}, ${num(s.map_lng)},
   ${q(s.google_maps_url)}, ${q(s.yandex_maps_url)}, ${q(s.apple_maps_url)}, ${q(s.instagram_url)}, ${q(s.instagram_handle)},
   ${q(s.direction_istanbul)}, ${q(s.direction_izmir)}, ${q(s.km_istanbul)}, ${q(s.km_izmir)}, ${q(s.entry_info)}, ${q(s.lost_found_phone)},
-  ${q(s.seo_title)}, ${q(s.seo_description)}, ${q(s.og_image_url)}
+  ${q(s.seo_title)}, ${q(s.seo_description)}, ${q(s.og_image_url)}, ${s.show_prices ? "true" : "false"}
 where not exists (select 1 from public.site_settings);
 
 `;

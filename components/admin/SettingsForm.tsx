@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Field, fieldInput } from "@/components/admin/ui";
+import { Field, Toggle, fieldInput } from "@/components/admin/ui";
 import { EntityForm } from "@/components/admin/EntityForm";
 import { ImageField } from "@/components/admin/ImageField";
 import { saveSettings } from "@/lib/actions/mutations";
@@ -50,6 +50,16 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
         <Field label="Hero Video URL (opsiyonel .mp4)" hint="Boş bırakılırsa kapak görseli gösterilir.">
           <input name="hero_video_url" type="url" defaultValue={s.hero_video_url ?? ""} className={fieldInput} />
         </Field>
+        <div className="rounded-lg bg-cream-200/50 p-3">
+          <Toggle
+            name="show_prices"
+            label="Menüde fiyatları göster"
+            defaultChecked={s.show_prices}
+          />
+          <p className="mt-1 pl-7 text-xs text-charcoal/50">
+            Kapalıyken menü ve öne çıkan ürünlerde fiyatlar gösterilmez.
+          </p>
+        </div>
       </Section>
 
       <Section title="İletişim">

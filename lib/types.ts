@@ -108,6 +108,7 @@ export type SiteSettings = {
   seo_description: string;
   og_image_url: string | null;
   hero_video_url?: string | null;
+  show_prices: boolean;
 };
 
 export type ContentSection = {

@@ -125,6 +125,7 @@ export const settingsSchema = z.object({
   seo_description: z.string().trim().default(""),
   og_image_url: z.string().trim().default(""),
   hero_video_url: z.string().trim().default(""),
+  show_prices: zBool(false),
 });
 
 export const facilitySchema = z.object({

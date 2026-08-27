@@ -12,7 +12,13 @@ function normalize(s: string) {
   return slugify(s).replace(/-/g, " ");
 }
 
-export function MenuBrowser({ groups }: { groups: Group[] }) {
+export function MenuBrowser({
+  groups,
+  showPrices = true,
+}: {
+  groups: Group[];
+  showPrices?: boolean;
+}) {
   const [query, setQuery] = useState("");
   const [active, setActive] = useState<string>("all");
 
@@ -125,7 +131,7 @@ export function MenuBrowser({ groups }: { groups: Group[] }) {
             </p>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {searchResults.map((item) => (
-                <MenuItemCard key={item.id} item={item} />
+                <MenuItemCard key={item.id} item={item} showPrices={showPrices} />
               ))}
             </div>
           </div>
@@ -167,7 +173,7 @@ export function MenuBrowser({ groups }: { groups: Group[] }) {
               ) : null}
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {g.items.map((item) => (
-                  <MenuItemCard key={item.id} item={item} />
+                  <MenuItemCard key={item.id} item={item} showPrices={showPrices} />
                 ))}
               </div>
             </section>
