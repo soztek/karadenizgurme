@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+/*
+  Karadeniz Gurme — tasarım sistemi
+  Palet: Yeşil (yapı) · Hardal (vurgu) · Kırmızı (en önemli aksiyon: yol tarifi) · Siyah
+*/
+@theme {
+  /* Yeşil — ana yapı, koyu bölümler */
+  --color-brand: #123b2a;
+  --color-brand-700: #0e3021;
+  --color-brand-600: #1b5238;
+  --color-brand-500: #256b4c;
+
+  /* Hardal — sıcak vurgu (eyebrow, fiyat, rozet, ikon, aktif durum) */
+  --color-mustard: #cf9e1a;
+  --color-mustard-600: #a97f10;
+  --color-mustard-700: #82620a;
+  --color-mustard-400: #e6c258;
+
+  /* Kırmızı — EN ÖNEMLİ aksiyon: Yol Tarifi butonları */
+  --color-red: #c1272d;
+  --color-red-600: #a11e23;
+  --color-red-500: #cf3a40;
+  --color-red-400: #dc5a5f;
+
+  /* Nötr — sıcak kanvas ve kum tonları */
+  --color-ivory: #fcf8ee; /* açık arka plan (kanvas) */
+  --color-cream: #f4e8cf; /* kum — tonlu bölümler / koyu üstü açık metin */
+  --color-cream-200: #f9f1de;
+
+  /* Siyah — metin ve koyu (footer) */
+  --color-charcoal: #16130f;
+
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 0.9rem;
+  --shadow-soft: 0 10px 30px -12px rgba(18, 59, 42, 0.25);
+  --shadow-red: 0 10px 26px -8px rgba(193, 39, 45, 0.45);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ivory);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Karadeniz ince desen — çok hafif topografik doku */
+.pattern-topo {
+  background-image: radial-gradient(rgba(207, 158, 26, 0.1) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Erişilebilirlik: hareketi azalt */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
+}
+
+/* Yol Tarifi butonu için nazik dikkat çekme */
+@keyframes soft-pulse {
+  0%, 100% {
+    box-shadow: 0 10px 26px -8px rgba(193, 39, 45, 0.45);
+  }
+  50% {
+    box-shadow: 0 12px 30px -6px rgba(193, 39, 45, 0.6);
+  }
+}
+
+.pulse-red {
+  animation: soft-pulse 2.6s ease-in-out infinite;
+}
+
+/* Görünür klavye odak halkası */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
