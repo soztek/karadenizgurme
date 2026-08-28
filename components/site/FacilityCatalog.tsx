@@ -10,29 +10,24 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { FacilityItem, FacilityKind } from "@/lib/types";
 
-const KINDS: {
-  kind: FacilityKind;
-  label: string;
-  icon: LucideIcon;
-}[] = [
-  { kind: "restoran", label: "Restoranlar", icon: Utensils },
-  { kind: "kafe", label: "Kafeler & Pastaneler", icon: Coffee },
-  { kind: "akaryakit", label: "Akaryakıt İstasyonları", icon: Fuel },
-  { kind: "ev_sarj", label: "Elektrikli Araç Şarj", icon: PlugZap },
-  { kind: "magaza", label: "Alışveriş & Mağazalar", icon: ShoppingBag },
-  { kind: "atm", label: "ATM & Bankacılık", icon: Landmark },
-  { kind: "hizmet", label: "Diğer Hizmetler", icon: Wrench },
-];
+const KIND_CONFIG: Record<
+  FacilityKind,
+  { label: string; icon: LucideIcon; order: number }
+> = {
+  restoran: { label: "Restoran", icon: Utensils, order: 1 },
+  kafe: { label: "Kafe & Pastane", icon: Coffee, order: 2 },
+  akaryakit: { label: "Akaryakıt", icon: Fuel, order: 3 },
+  ev_sarj: { label: "EV Şarj", icon: PlugZap, order: 4 },
+  magaza: { label: "Alışveriş", icon: ShoppingBag, order: 5 },
+  atm: { label: "ATM & Banka", icon: Landmark, order: 6 },
+  hizmet: { label: "Hizmet", icon: Wrench, order: 7 },
+};
 
 export function FacilityCatalog({ items }: { items: FacilityItem[] }) {
-  const groups = KINDS.map((k) => ({
-    ...k,
-    rows: items.filter((i) => i.kind === k.kind),
-  })).filter((g) => g.rows.length > 0);
-
-  if (!groups.length) {
+  if (!items.length) {
     return (
       <Container className="py-16">
         <p className="text-center text-charcoal/60">
@@ -42,61 +37,76 @@ export function FacilityCatalog({ items }: { items: FacilityItem[] }) {
     );
   }
 
+  // Türe göre sırala, aynı türleri yan yana getir
+  const sorted = [...items].sort((a, b) => {
+    const oa = KIND_CONFIG[a.kind]?.order ?? 99;
+    const ob = KIND_CONFIG[b.kind]?.order ?? 99;
+    if (oa !== ob) return oa - ob;
+    return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+  });
+
+  const seen = new Set<string>();
+
   return (
-    <Container className="py-14">
-      <div className="space-y-14">
-        {groups.map((g) => {
-          const Icon = g.icon;
-          return (
-            <section key={g.kind} id={g.kind} className="scroll-mt-28">
-              <div className="mb-5 flex items-center gap-3 border-b border-brand/10 pb-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-mustard/15 text-mustard-700">
-                  <Icon className="h-6 w-6" />
-                </span>
-                <h2 className="font-display text-2xl font-semibold text-brand">
-                  {g.label}
-                </h2>
-                <span className="ml-auto text-sm text-charcoal/45">
-                  {g.rows.length}
-                </span>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {g.rows.map((r) => (
-                  <div
-                    key={r.id}
-                    className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-brand/10 bg-white shadow-sm"
-                  >
-                    {r.image_url ? (
-                      <div className="relative aspect-[16/10] w-full overflow-hidden">
-                        <Image
-                          src={r.image_url}
-                          alt={r.name}
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
-                          className="object-cover"
-                        />
-                      </div>
-                    ) : null}
-                    <div className="flex flex-1 flex-col p-5">
-                      <h3 className="font-semibold text-brand">{r.name}</h3>
-                      {r.description ? (
-                        <p className="mt-1 text-sm leading-relaxed text-charcoal/65">
-                          {r.description}
-                        </p>
-                      ) : null}
-                      {r.detail ? (
-                        <span className="mt-3 inline-flex w-fit rounded-full bg-brand/8 px-2.5 py-1 text-xs font-medium text-brand">
-                          {r.detail}
-                        </span>
-                      ) : null}
-                    </div>
+    <section className="py-16 sm:py-20">
+      <Container>
+        <SectionHeading
+          eyebrow="Tesiste"
+          title="Tesis Hizmetleri"
+          subtitle="Oksijen 266 dinlenme tesisinde bulabileceğiniz restoran, akaryakıt, şarj, alışveriş ve daha fazlası."
+        />
+
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {sorted.map((r) => {
+            const cfg = KIND_CONFIG[r.kind] ?? KIND_CONFIG.hizmet;
+            const Icon = cfg.icon;
+            const firstOfKind = !seen.has(r.kind);
+            seen.add(r.kind);
+            return (
+              <div
+                key={r.id}
+                id={firstOfKind ? r.kind : undefined}
+                className="flex scroll-mt-28 flex-col overflow-hidden rounded-[var(--radius-card)] border border-brand/10 bg-white shadow-sm transition-shadow hover:shadow-[var(--shadow-soft)]"
+              >
+                {r.image_url ? (
+                  <div className="relative aspect-[16/10] w-full overflow-hidden">
+                    <Image
+                      src={r.image_url}
+                      alt={r.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
+                      className="object-cover"
+                    />
                   </div>
-                ))}
+                ) : (
+                  <div className="flex aspect-[16/10] w-full items-center justify-center bg-cream pattern-topo text-brand/25">
+                    <Icon className="h-9 w-9" />
+                  </div>
+                )}
+                <div className="flex flex-1 flex-col p-5">
+                  <span className="mb-2 inline-flex w-fit items-center gap-1.5 rounded-full bg-mustard/15 px-2.5 py-1 text-[11px] font-semibold text-mustard-700">
+                    <Icon className="h-3.5 w-3.5" />
+                    {cfg.label}
+                  </span>
+                  <h3 className="font-semibold text-brand">{r.name}</h3>
+                  {r.description ? (
+                    <p className="mt-1 text-sm leading-relaxed text-charcoal/65">
+                      {r.description}
+                    </p>
+                  ) : null}
+                  {r.detail ? (
+                    <span className="mt-auto pt-3">
+                      <span className="inline-flex w-fit rounded-full bg-brand/8 px-2.5 py-1 text-xs font-medium text-brand">
+                        {r.detail}
+                      </span>
+                    </span>
+                  ) : null}
+                </div>
               </div>
-            </section>
-          );
-        })}
-      </div>
-    </Container>
+            );
+          })}
+        </div>
+      </Container>
+    </section>
   );
 }
