@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { LoginForm } from "./LoginForm";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
@@ -6,6 +7,9 @@ export const metadata: Metadata = {
   title: "Yönetim Girişi",
   robots: { index: false, follow: false },
 };
+
+// Giriş sayfası statik önizlenmemeli (useSearchParams + runtime env kontrolü)
+export const dynamic = "force-dynamic";
 
 export default function AdminLoginPage() {
   return (
@@ -19,7 +23,9 @@ export default function AdminLoginPage() {
         </div>
 
         {isSupabaseConfigured ? (
-          <LoginForm />
+          <Suspense fallback={<div className="mt-6 h-40" />}>
+            <LoginForm />
+          </Suspense>
         ) : (
           <div className="mt-6 rounded-lg bg-amber-50 p-4 text-sm text-amber-800">
             Supabase yapılandırması bulunamadı. Yönetim paneline giriş için{" "}
