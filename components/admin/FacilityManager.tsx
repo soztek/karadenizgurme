@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { Modal, Field, Toggle, fieldInput, PrimaryButton } from "@/components/admin/ui";
 import { EntityForm, DeleteButton } from "@/components/admin/EntityForm";
+import { ImageField } from "@/components/admin/ImageField";
 import { SortableList } from "@/components/admin/SortableList";
 import { saveFacilityItem, deleteFacilityItem, reorder } from "@/lib/actions/mutations";
 import type { FacilityItem } from "@/lib/types";
@@ -49,6 +51,11 @@ export function FacilityManager({ items }: { items: FacilityItem[] }) {
           onReorder={(ids) => reorder("facility_items", ids)}
           render={(f) => (
             <div className="flex items-center gap-3 rounded-lg border border-brand/10 bg-white p-3">
+              {f.image_url ? (
+                <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-cream">
+                  <Image src={f.image_url} alt="" fill sizes="44px" className="object-cover" />
+                </div>
+              ) : null}
               <span className="shrink-0 rounded-full bg-brand/8 px-2.5 py-1 text-[11px] font-medium text-brand">
                 {KIND_LABELS[f.kind] ?? f.kind}
               </span>
@@ -114,6 +121,12 @@ export function FacilityManager({ items }: { items: FacilityItem[] }) {
           >
             <input name="detail" defaultValue={edit?.detail ?? ""} className={fieldInput} />
           </Field>
+          <ImageField
+            name="image_url"
+            label="Görsel (opsiyonel)"
+            folder="tesis"
+            defaultValue={edit?.image_url ?? ""}
+          />
           <Field label="Sıra">
             <input name="sort_order" type="number" defaultValue={edit?.sort_order ?? 0} className={fieldInput} />
           </Field>

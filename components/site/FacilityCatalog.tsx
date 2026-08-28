@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Utensils,
   Coffee,
@@ -63,19 +64,32 @@ export function FacilityCatalog({ items }: { items: FacilityItem[] }) {
                 {g.rows.map((r) => (
                   <div
                     key={r.id}
-                    className="flex flex-col rounded-[var(--radius-card)] border border-brand/10 bg-white p-5 shadow-sm"
+                    className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-brand/10 bg-white shadow-sm"
                   >
-                    <h3 className="font-semibold text-brand">{r.name}</h3>
-                    {r.description ? (
-                      <p className="mt-1 text-sm leading-relaxed text-charcoal/65">
-                        {r.description}
-                      </p>
+                    {r.image_url ? (
+                      <div className="relative aspect-[16/10] w-full overflow-hidden">
+                        <Image
+                          src={r.image_url}
+                          alt={r.name}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
+                          className="object-cover"
+                        />
+                      </div>
                     ) : null}
-                    {r.detail ? (
-                      <span className="mt-3 inline-flex w-fit rounded-full bg-brand/8 px-2.5 py-1 text-xs font-medium text-brand">
-                        {r.detail}
-                      </span>
-                    ) : null}
+                    <div className="flex flex-1 flex-col p-5">
+                      <h3 className="font-semibold text-brand">{r.name}</h3>
+                      {r.description ? (
+                        <p className="mt-1 text-sm leading-relaxed text-charcoal/65">
+                          {r.description}
+                        </p>
+                      ) : null}
+                      {r.detail ? (
+                        <span className="mt-3 inline-flex w-fit rounded-full bg-brand/8 px-2.5 py-1 text-xs font-medium text-brand">
+                          {r.detail}
+                        </span>
+                      ) : null}
+                    </div>
                   </div>
                 ))}
               </div>
