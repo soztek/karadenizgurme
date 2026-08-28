@@ -17,10 +17,15 @@ import {
   Store,
   type LucideIcon,
 } from "lucide-react";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-export type Amenity = { icon: string; label: string };
+export type Amenity = {
+  icon: string;
+  label: string;
+  image_url?: string | null;
+};
 
 function MosqueIcon({ className }: { className?: string }) {
   return (
@@ -63,7 +68,13 @@ const lucideMap: Record<string, LucideIcon> = {
   store: Store,
 };
 
-function AmenityIcon({ name, className }: { name: string; className?: string }) {
+export function AmenityIcon({
+  name,
+  className,
+}: {
+  name: string;
+  className?: string;
+}) {
   if (name === "mosque") return <MosqueIcon className={className} />;
   const Icon = lucideMap[name] ?? SquareParking;
   return <Icon className={className} aria-hidden />;
@@ -89,9 +100,21 @@ export function Amenities({
               key={a.label}
               className="flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-brand/10 bg-white p-5 text-center transition-shadow hover:shadow-[var(--shadow-soft)]"
             >
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand/8 text-brand">
-                <AmenityIcon name={a.icon} className="h-7 w-7" />
-              </span>
+              {a.image_url ? (
+                <span className="relative h-14 w-14 overflow-hidden rounded-full">
+                  <Image
+                    src={a.image_url}
+                    alt={a.label}
+                    fill
+                    sizes="56px"
+                    className="object-cover"
+                  />
+                </span>
+              ) : (
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand/8 text-brand">
+                  <AmenityIcon name={a.icon} className="h-7 w-7" />
+                </span>
+              )}
               <span className="text-sm font-medium text-brand">{a.label}</span>
             </div>
           ))}

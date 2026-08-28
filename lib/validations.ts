@@ -128,6 +128,14 @@ export const settingsSchema = z.object({
   show_prices: zBool(false),
 });
 
+export const amenitySchema = z.object({
+  icon: z.string().trim().min(1, "İkon seçiniz."),
+  label: z.string().trim().min(2, "Ad gerekli."),
+  image_url: z.string().trim().optional().default(""),
+  sort_order: z.coerce.number().int().default(0),
+  is_active: zBool(true),
+});
+
 export const facilitySchema = z.object({
   kind: z.enum([
     "restoran",

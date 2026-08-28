@@ -6,7 +6,7 @@ begin;
 
 truncate table public.menu_items, public.categories, public.gallery_items,
   public.social_posts, public.testimonials, public.campaigns,
-  public.content_sections, public.facility_items restart identity cascade;
+  public.content_sections, public.facility_items, public.amenities restart identity cascade;
 
 -- Site ayarları
 insert into public.site_settings (
@@ -1128,6 +1128,32 @@ insert into public.social_posts (title, image_url, link_url, sort_order, is_acti
 values ('Instagram', '/images/hero/tatli.png', 'https://www.instagram.com/karadenizgurmeoksijen266/', 3, true);
 insert into public.social_posts (title, image_url, link_url, sort_order, is_active)
 values ('Instagram', '/images/hero/pide.png', 'https://www.instagram.com/karadenizgurmeoksijen266/', 4, true);
+
+-- Tesis Olanakları (ikon şeridi)
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('parking', 'Otopark', 1, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('fuel', 'Akaryakıt', 2, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('ev', 'EV Şarj', 3, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('mosque', 'Mescid', 4, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('baby', 'Emzirme Odası', 5, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('playground', 'Çocuk Oyun Alanı', 6, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('accessibility', 'Engelli Erişimi', 7, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('toilet', 'Tuvaletler', 8, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('shower', 'Duş', 9, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('pet', 'Evcil Hayvan Alanı', 10, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('atm', 'ATM', 11, true);
+insert into public.amenities (icon, label, sort_order, is_active)
+values ('wifi', 'Ücretsiz Wi-Fi', 12, true);
 
 -- Tesis Rehberi öğeleri
 insert into public.facility_items (kind, name, description, detail, image_url, sort_order, is_active)

@@ -9,12 +9,12 @@ import {
   DEFAULT_SETTINGS,
   DEFAULT_SOCIAL,
   DEFAULT_AMENITIES,
+  DEFAULT_AMENITY_ITEMS,
   DEFAULT_FACILITY,
   DEFAULT_STORY,
   DEFAULT_TESTIMONIALS,
   DEFAULT_WHY_US,
 } from "./defaults";
-import type { Amenity } from "@/components/site/Amenities";
 import type {
   Campaign,
   Category,
@@ -26,6 +26,7 @@ import type {
   SocialPost,
   Testimonial,
   FacilityItem,
+  AmenityItem,
 } from "./types";
 
 const MENU_SELECT =
@@ -233,17 +234,31 @@ export const getFacilityItems = cache(async (): Promise<FacilityItem[]> => {
   }
 });
 
+export const getAmenityItems = cache(async (): Promise<AmenityItem[]> => {
+  try {
+    const sb = await createClient();
+    if (!sb) return DEFAULT_AMENITY_ITEMS;
+    const { data } = await sb
+      .from("amenities")
+      .select("*")
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true });
+    if (!data || data.length === 0) return DEFAULT_AMENITY_ITEMS;
+    return data as AmenityItem[];
+  } catch {
+    return DEFAULT_AMENITY_ITEMS;
+  }
+});
+
 export async function getAmenities(): Promise<{
   title: string;
   subtitle: string;
-  items: Amenity[];
+  items: AmenityItem[];
 }> {
-  const c = await getContent("amenities");
-  const items =
-    (c?.data?.items as Amenity[] | undefined) &&
-    (c!.data!.items as Amenity[]).length > 0
-      ? (c!.data!.items as Amenity[])
-      : DEFAULT_AMENITIES.items;
+  const [c, items] = await Promise.all([
+    getContent("amenities"),
+    getAmenityItems(),
+  ]);
   return {
     title: c?.title || DEFAULT_AMENITIES.title,
     subtitle: c?.subtitle || DEFAULT_AMENITIES.subtitle,

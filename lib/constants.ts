@@ -46,5 +46,25 @@ export const ALLERGEN_OPTIONS = [
   "Soya",
 ];
 
+/** Tesis olanakları için kullanılabilir ikon anahtarları (admin seçimi) */
+export const AMENITY_ICON_OPTIONS = [
+  "parking",
+  "fuel",
+  "ev",
+  "mosque",
+  "baby",
+  "playground",
+  "accessibility",
+  "toilet",
+  "shower",
+  "pet",
+  "atm",
+  "wifi",
+  "coffee",
+  "restaurant",
+  "store",
+  "tailor",
+];
+
 /** Supabase Storage bucket adı (görsel yüklemeleri) */
 export const STORAGE_BUCKET = "media";

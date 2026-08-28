@@ -230,3 +230,22 @@ alter table public.site_settings add column if not exists km_izmir text default 
 alter table public.site_settings add column if not exists entry_info text default '';
 alter table public.site_settings add column if not exists lost_found_phone text default '';
 alter table public.site_settings add column if not exists show_prices boolean default false;
+
+-- ============ Tesis Olanakları (ikon şeridi) ============
+create table if not exists public.amenities (
+  id uuid primary key default gen_random_uuid(),
+  icon text not null default 'parking',
+  label text not null,
+  image_url text,
+  sort_order integer not null default 0,
+  is_active boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.amenities enable row level security;
+create policy "public read amenities" on public.amenities for select using (true);
+
+drop trigger if exists set_updated_at on public.amenities;
+create trigger set_updated_at before update on public.amenities
+  for each row execute function public.set_updated_at();

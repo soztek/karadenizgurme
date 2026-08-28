@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { withAdmin, type ActionResult } from "./helpers";
 import {
+  amenitySchema,
   campaignSchema,
   categorySchema,
   contentSchema,
@@ -159,7 +160,8 @@ export async function reorder(
     | "menu_items"
     | "gallery_items"
     | "social_posts"
-    | "facility_items",
+    | "facility_items"
+    | "amenities",
   orderedIds: string[],
 ): Promise<ActionResult> {
   const guard = await withAdmin();
@@ -175,6 +177,37 @@ export async function reorder(
   revalidatePath("/admin/sosyal");
   revalidatePath("/admin/tesis");
   return { ok: true };
+}
+
+/* ---------------- Tesis Olanakları ---------------- */
+
+export async function saveAmenity(formData: FormData): Promise<ActionResult> {
+  const guard = await withAdmin();
+  if (!guard.ok) return guard;
+  const p = parse(amenitySchema, formData);
+  if (!p.ok) return p;
+  const d = p.data;
+  const res = await persist(guard.sb, "amenities", getId(formData), {
+    icon: d.icon,
+    label: d.label,
+    image_url: d.image_url || null,
+    sort_order: d.sort_order,
+    is_active: d.is_active,
+  });
+  revalidateSite();
+  revalidatePath("/tesis");
+  revalidatePath("/admin/tesis");
+  return res;
+}
+
+export async function deleteAmenity(id: string): Promise<ActionResult> {
+  const guard = await withAdmin();
+  if (!guard.ok) return guard;
+  const { error } = await guard.sb.from("amenities").delete().eq("id", id);
+  revalidateSite();
+  revalidatePath("/tesis");
+  revalidatePath("/admin/tesis");
+  return error ? { ok: false, error: error.message } : { ok: true };
 }
 
 /* ---------------- Tesis Rehberi ---------------- */

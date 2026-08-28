@@ -137,6 +137,17 @@ export type FacilityKind =
   | "atm"
   | "hizmet";
 
+export type AmenityItem = {
+  id: string;
+  icon: string;
+  label: string;
+  image_url: string | null;
+  sort_order: number;
+  is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
+};
+
 export type FacilityItem = {
   id: string;
   kind: FacilityKind;

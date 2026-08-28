@@ -26,12 +26,6 @@ export function ContentManager({ sections }: { sections: ContentSection[] }) {
     null,
     2,
   );
-  const amenitiesData = JSON.stringify(
-    (amenities?.data as object) ?? { items: DEFAULT_AMENITIES.items },
-    null,
-    2,
-  );
-
   const box =
     "rounded-[var(--radius-card)] border border-brand/10 bg-white p-5";
 
@@ -79,10 +73,10 @@ export function ContentManager({ sections }: { sections: ContentSection[] }) {
         </EntityForm>
       </div>
 
-      {/* Tesis Olanakları */}
+      {/* Tesis Olanakları — başlık/alt başlık */}
       <div className={box}>
         <h2 className="mb-4 font-display text-lg font-semibold text-brand">
-          Tesis Olanakları (Ana Sayfa)
+          Tesis Olanakları Başlığı
         </h2>
         <EntityForm action={saveContent} onDone={refresh} submitLabel="Kaydet">
           <input type="hidden" name="key" value="amenities" />
@@ -92,20 +86,20 @@ export function ContentManager({ sections }: { sections: ContentSection[] }) {
           <Field label="Alt Başlık">
             <input name="subtitle" defaultValue={amenities?.subtitle ?? DEFAULT_AMENITIES.subtitle} className={fieldInput} />
           </Field>
-          <Field
-            label="Olanaklar (JSON)"
-            hint='Biçim: {"items":[{"icon":"parking","label":"Otopark"}]} — icon: parking, mosque, baby, shopping, tailor, toilet, wifi, fuel, accessibility, coffee'
-          >
-            <textarea name="data" defaultValue={amenitiesData} rows={10} className={`${fieldInput} font-mono text-xs`} />
-          </Field>
+          <p className="text-xs text-charcoal/50">
+            Olanak öğelerini (Otopark, Akaryakıt vb. ekle/çıkar/görsel){" "}
+            <strong className="text-brand">Tesis Rehberi</strong> sayfasından
+            yönetin.
+          </p>
         </EntityForm>
       </div>
 
       <div className="rounded-lg bg-cream-200/60 p-4 text-sm text-charcoal/60">
-        <strong className="text-brand">İlgili diğer içerikler:</strong> Instagram
-        bağlantısı ve iletişim/footer bilgileri <em>Site Ayarları</em>{" "}
-        sayfasından; Instagram gönderi kartları <em>Sosyal Medya</em>{" "}
-        sayfasından; müşteri yorumları <em>Yorumlar</em> sayfasından yönetilir.
+        <strong className="text-brand">İlgili diğer içerikler:</strong> Tesis
+        olanakları ve hizmetleri <em>Tesis Rehberi</em>; Instagram bağlantısı ve
+        iletişim/footer bilgileri <em>Site Ayarları</em>; Instagram gönderi
+        kartları <em>Sosyal Medya</em>; müşteri yorumları <em>Yorumlar</em>{" "}
+        sayfasından yönetilir.
       </div>
     </div>
   );

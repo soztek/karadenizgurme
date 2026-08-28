@@ -9,6 +9,7 @@ import type {
   Testimonial,
   Campaign,
   FacilityItem,
+  AmenityItem,
 } from "./types";
 import { slugify } from "./utils";
 
@@ -124,6 +125,17 @@ export const DEFAULT_AMENITIES = seed.content.amenities as {
   subtitle: string;
   items: { icon: string; label: string }[];
 };
+
+export const DEFAULT_AMENITY_ITEMS: AmenityItem[] = (
+  seed.content.amenities.items as { icon: string; label: string }[]
+).map((a, i) => ({
+  id: `amenity-${i + 1}`,
+  icon: a.icon,
+  label: a.label,
+  image_url: null,
+  sort_order: i + 1,
+  is_active: true,
+}));
 
 export const DEFAULT_FACILITY: FacilityItem[] = (
   seed.facility_items as unknown[]

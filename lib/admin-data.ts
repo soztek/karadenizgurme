@@ -4,6 +4,7 @@ import type {
   Campaign,
   Category,
   ContentSection,
+  AmenityItem,
   FacilityItem,
   GalleryItem,
   MenuItemWithCategory,
@@ -42,6 +43,7 @@ export async function getAdminMenuItems(): Promise<MenuItemWithCategory[]> {
 
 export const getAdminGallery = () => all<GalleryItem>("gallery_items");
 export const getAdminFacility = () => all<FacilityItem>("facility_items");
+export const getAdminAmenities = () => all<AmenityItem>("amenities");
 export const getAdminCampaigns = () => all<Campaign>("campaigns");
 export const getAdminTestimonials = () => all<Testimonial>("testimonials");
 export const getAdminSocial = () => all<SocialPost>("social_posts");

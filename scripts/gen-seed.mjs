@@ -29,7 +29,7 @@ begin;
 
 truncate table public.menu_items, public.categories, public.gallery_items,
   public.social_posts, public.testimonials, public.campaigns,
-  public.content_sections, public.facility_items restart identity cascade;
+  public.content_sections, public.facility_items, public.amenities restart identity cascade;
 
 `;
 
@@ -91,6 +91,14 @@ for (const p of seed.social_posts) {
   out += `insert into public.social_posts (title, image_url, link_url, sort_order, is_active)
 values (${q(p.title || null)}, ${q(p.image_url)}, ${q(p.link_url || null)}, ${p.sort_order}, true);\n`;
 }
+out += "\n";
+
+// Tesis Olanakları
+out += `-- Tesis Olanakları (ikon şeridi)\n`;
+(seed.content.amenities?.items || []).forEach((a, i) => {
+  out += `insert into public.amenities (icon, label, sort_order, is_active)
+values (${q(a.icon)}, ${q(a.label)}, ${i + 1}, true);\n`;
+});
 out += "\n";
 
 // Tesis Rehberi
