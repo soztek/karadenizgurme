@@ -6,6 +6,8 @@ import { Amenities } from "@/components/site/Amenities";
 import { FacilityCatalog } from "@/components/site/FacilityCatalog";
 import { WeatherWidget } from "@/components/site/WeatherWidget";
 import { BreadcrumbJsonLd } from "@/components/site/JsonLd";
+import { DirectionsButton } from "@/components/site/DirectionsButton";
+import { directionsTargets } from "@/lib/directions";
 import { getSettings, getFacilityItems, getAmenities } from "@/lib/data";
 import { telLink } from "@/lib/utils";
 
@@ -23,7 +25,7 @@ export default async function TesisPage() {
     getAmenities(),
   ]);
 
-  const directionsHref = settings.google_maps_url || "/yol-tarifi";
+  const targets = directionsTargets(settings);
 
   return (
     <>
@@ -88,15 +90,13 @@ export default async function TesisPage() {
                 </li>
               ) : null}
             </ul>
-            <a
-              href={directionsHref}
-              target={settings.google_maps_url ? "_blank" : undefined}
-              rel={settings.google_maps_url ? "noopener noreferrer" : undefined}
+            <DirectionsButton
+              targets={targets}
               className="mt-5 inline-flex items-center gap-2 rounded-full bg-red px-5 py-3 text-sm font-semibold text-white shadow-[var(--shadow-red)] transition-colors hover:bg-red-600"
             >
               <Navigation className="h-4 w-4" />
               Hemen Yol Tarifi Al
-            </a>
+            </DirectionsButton>
           </div>
 
           {/* Hava durumu */}

@@ -99,16 +99,45 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
             <input name="map_lng" defaultValue={s.map_lng ?? ""} className={fieldInput} />
           </Field>
         </div>
-        <Field label="Google Maps Bağlantısı">
-          <input name="google_maps_url" type="url" defaultValue={s.google_maps_url} className={fieldInput} />
-        </Field>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Yandex Navigasyon Bağlantısı">
-            <input name="yandex_maps_url" type="url" defaultValue={s.yandex_maps_url} className={fieldInput} />
+        <p className="rounded-lg bg-mustard/10 px-4 py-3 text-sm text-charcoal/75">
+          Otoyolda karşılıklı <strong>2 tesis</strong> var. Ziyaretçi &quot;Yol
+          Tarifi&quot; düğmesine bastığında gittiği yön (pusula) algılanır ve
+          bulunduğu kulvardaki tesise yönlendirilir. Her iki tesisin harita
+          bağlantısını da girin — biri boşsa tekli yönlendirme yapılır.
+        </p>
+
+        <div className="rounded-[var(--radius-card)] border border-brand/12 bg-white/60 p-4">
+          <Field label="1. Tesis — Yön Etiketi" hint="Ziyaretçiye gösterilir. Örn. İstanbul yönünden gelenler (İzmir istikameti)">
+            <input name="direction_label_1" defaultValue={s.direction_label_1} className={fieldInput} />
           </Field>
-          <Field label="Apple Maps Bağlantısı">
-            <input name="apple_maps_url" type="url" defaultValue={s.apple_maps_url} className={fieldInput} />
+          <Field label="1. Tesis — Google Maps Bağlantısı">
+            <input name="google_maps_url" type="url" defaultValue={s.google_maps_url} className={fieldInput} />
           </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="1. Tesis — Yandex">
+              <input name="yandex_maps_url" type="url" defaultValue={s.yandex_maps_url} className={fieldInput} />
+            </Field>
+            <Field label="1. Tesis — Apple Maps">
+              <input name="apple_maps_url" type="url" defaultValue={s.apple_maps_url} className={fieldInput} />
+            </Field>
+          </div>
+        </div>
+
+        <div className="rounded-[var(--radius-card)] border border-brand/12 bg-white/60 p-4">
+          <Field label="2. Tesis — Yön Etiketi" hint="Örn. İzmir yönünden gelenler (İstanbul istikameti)">
+            <input name="direction_label_2" defaultValue={s.direction_label_2} className={fieldInput} />
+          </Field>
+          <Field label="2. Tesis — Google Maps Bağlantısı" hint="Karşı kulvardaki tesisin konumu">
+            <input name="google_maps_url_2" type="url" defaultValue={s.google_maps_url_2} className={fieldInput} />
+          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="2. Tesis — Yandex">
+              <input name="yandex_maps_url_2" type="url" defaultValue={s.yandex_maps_url_2} className={fieldInput} />
+            </Field>
+            <Field label="2. Tesis — Apple Maps">
+              <input name="apple_maps_url_2" type="url" defaultValue={s.apple_maps_url_2} className={fieldInput} />
+            </Field>
+          </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="İstanbul Yönünden Km" hint="Örn. İstanbul yönünden 266. km">

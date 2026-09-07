@@ -1,12 +1,15 @@
 import Image from "next/image";
 import { UtensilsCrossed, Navigation, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
+import { DirectionsButton } from "@/components/site/DirectionsButton";
+import { directionsTargets } from "@/lib/directions";
 import { telLink } from "@/lib/utils";
 import type { SiteSettings } from "@/lib/types";
 
 export function Hero({ settings }: { settings: SiteSettings }) {
   const poster = settings.og_image_url || "/images/hero/hero-1.png";
   const hasVideo = Boolean(settings.hero_video_url);
+  const targets = directionsTargets(settings);
 
   return (
     <section className="relative isolate overflow-hidden">
@@ -50,16 +53,13 @@ export function Hero({ settings }: { settings: SiteSettings }) {
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-3">
-            <ButtonLink
-              href={settings.google_maps_url || "/yol-tarifi"}
-              external={Boolean(settings.google_maps_url)}
-              size="xl"
-              variant="red"
-              className="pulse-red"
+            <DirectionsButton
+              targets={targets}
+              className="pulse-red inline-flex h-14 items-center justify-center gap-2 rounded-full bg-red px-9 text-lg font-semibold text-white shadow-[var(--shadow-red)] transition-colors hover:bg-red-600"
             >
               <Navigation className="h-6 w-6" />
               Yol Tarifi Al
-            </ButtonLink>
+            </DirectionsButton>
             <ButtonLink href="/menu" variant="mustard" size="lg">
               <UtensilsCrossed className="h-5 w-5" />
               Menüyü İncele

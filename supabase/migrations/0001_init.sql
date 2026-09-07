@@ -230,6 +230,12 @@ alter table public.site_settings add column if not exists km_izmir text default 
 alter table public.site_settings add column if not exists entry_info text default '';
 alter table public.site_settings add column if not exists lost_found_phone text default '';
 alter table public.site_settings add column if not exists show_prices boolean default false;
+-- İkinci tesis (karşı kulvar) — çift yönlü yol tarifi
+alter table public.site_settings add column if not exists google_maps_url_2 text default '';
+alter table public.site_settings add column if not exists yandex_maps_url_2 text default '';
+alter table public.site_settings add column if not exists apple_maps_url_2 text default '';
+alter table public.site_settings add column if not exists direction_label_1 text default '';
+alter table public.site_settings add column if not exists direction_label_2 text default '';
 
 -- ============ Tesis Olanakları (ikon şeridi) ============
 create table if not exists public.amenities (

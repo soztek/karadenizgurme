@@ -96,6 +96,12 @@ export type SiteSettings = {
   google_maps_url: string;
   yandex_maps_url: string;
   apple_maps_url: string;
+  // İkinci tesis (karşı kulvar) — çift yönlü yol tarifi
+  google_maps_url_2: string;
+  yandex_maps_url_2: string;
+  apple_maps_url_2: string;
+  direction_label_1: string;
+  direction_label_2: string;
   instagram_url: string;
   instagram_handle: string;
   direction_istanbul: string;

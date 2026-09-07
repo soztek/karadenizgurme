@@ -5,6 +5,8 @@ import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/site/PageHero";
 import { ContactForm } from "@/components/site/ContactForm";
 import { BreadcrumbJsonLd } from "@/components/site/JsonLd";
+import { DirectionsButton } from "@/components/site/DirectionsButton";
+import { directionsTargets } from "@/lib/directions";
 import { getSettings } from "@/lib/data";
 import { telLink, whatsappLink } from "@/lib/utils";
 
@@ -17,6 +19,7 @@ export const metadata: Metadata = {
 
 export default async function IletisimPage() {
   const s = await getSettings();
+  const targets = directionsTargets(s);
 
   const rows = [
     s.phone && {
@@ -125,15 +128,13 @@ export default async function IletisimPage() {
               )}
             </ul>
 
-            <a
-              href={s.google_maps_url || "/yol-tarifi"}
-              target={s.google_maps_url ? "_blank" : undefined}
-              rel={s.google_maps_url ? "noopener noreferrer" : undefined}
+            <DirectionsButton
+              targets={targets}
               className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-cream transition-colors hover:bg-brand-600"
             >
               <Navigation className="h-4 w-4" />
               Yol Tarifi Al
-            </a>
+            </DirectionsButton>
           </div>
 
           <div className="rounded-[var(--radius-card)] border border-brand/10 bg-white p-6 shadow-sm sm:p-8">

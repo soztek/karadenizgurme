@@ -1,6 +1,8 @@
 import { MapPin, Phone, Clock, Navigation, ArrowRightFromLine } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { DirectionsButton } from "@/components/site/DirectionsButton";
+import { directionsTargets } from "@/lib/directions";
 import { telLink } from "@/lib/utils";
 import type { SiteSettings } from "@/lib/types";
 
@@ -38,8 +40,9 @@ export function DirectionsSection({
   showDirections?: boolean;
   withHeading?: boolean;
 }) {
-  const mapButtons = [
-    { label: "Google Maps", url: settings.google_maps_url },
+  const targets = directionsTargets(settings);
+  const isDual = targets.length > 1;
+  const secondaryButtons = [
     { label: "Yandex Navigasyon", url: settings.yandex_maps_url },
     { label: "Apple Maps", url: settings.apple_maps_url },
   ].filter((b) => b.url);
@@ -98,24 +101,28 @@ export function DirectionsSection({
               ) : null}
             </ul>
 
-            {mapButtons.length ? (
+            {targets.length ? (
               <div className="mt-6 flex flex-wrap gap-2">
-                {mapButtons.map((b, i) => (
-                  <a
-                    key={b.label}
-                    href={b.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={
-                      i === 0
-                        ? "inline-flex items-center gap-2 rounded-full bg-red px-5 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-red)] transition-colors hover:bg-red-600"
-                        : "inline-flex items-center gap-2 rounded-full border border-brand/20 px-4 py-2.5 text-sm font-medium text-brand transition-colors hover:bg-brand hover:text-cream"
-                    }
-                  >
-                    <Navigation className="h-4 w-4" />
-                    {b.label}
-                  </a>
-                ))}
+                <DirectionsButton
+                  targets={targets}
+                  className="inline-flex items-center gap-2 rounded-full bg-red px-5 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-red)] transition-colors hover:bg-red-600"
+                >
+                  <Navigation className="h-4 w-4" />
+                  {isDual ? "Yol Tarifi Al (Yönünüze Göre)" : "Yol Tarifi Al"}
+                </DirectionsButton>
+                {!isDual &&
+                  secondaryButtons.map((b) => (
+                    <a
+                      key={b.label}
+                      href={b.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-brand/20 px-4 py-2.5 text-sm font-medium text-brand transition-colors hover:bg-brand hover:text-cream"
+                    >
+                      <Navigation className="h-4 w-4" />
+                      {b.label}
+                    </a>
+                  ))}
               </div>
             ) : (
               <p className="mt-6 rounded-lg bg-cream-200/70 px-4 py-3 text-sm text-charcoal/60">

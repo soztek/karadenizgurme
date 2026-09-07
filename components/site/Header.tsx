@@ -6,6 +6,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Navigation } from "lucide-react";
 import { NAV_LINKS } from "@/lib/constants";
+import { DirectionsButton } from "@/components/site/DirectionsButton";
+import { directionsTargets } from "@/lib/directions";
 import { cn } from "@/lib/utils";
 import type { SiteSettings } from "@/lib/types";
 
@@ -25,7 +27,7 @@ export function Header({ settings }: { settings: SiteSettings }) {
     setOpen(false);
   }, [pathname]);
 
-  const directionHref = settings.google_maps_url || "/yol-tarifi";
+  const targets = directionsTargets(settings);
 
   return (
     <header
@@ -82,15 +84,13 @@ export function Header({ settings }: { settings: SiteSettings }) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a
-            href={directionHref}
-            target={settings.google_maps_url ? "_blank" : undefined}
-            rel={settings.google_maps_url ? "noopener noreferrer" : undefined}
+          <DirectionsButton
+            targets={targets}
             className="hidden items-center gap-2 rounded-full bg-red px-5 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-red)] transition-colors hover:bg-red-600 sm:inline-flex"
           >
             <Navigation className="h-4 w-4" />
             Yol Tarifi Al
-          </a>
+          </DirectionsButton>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -115,15 +115,13 @@ export function Header({ settings }: { settings: SiteSettings }) {
                 {link.label}
               </Link>
             ))}
-            <a
-              href={directionHref}
-              target={settings.google_maps_url ? "_blank" : undefined}
-              rel={settings.google_maps_url ? "noopener noreferrer" : undefined}
-              className="mt-2 mb-2 inline-flex items-center justify-center gap-2 rounded-full bg-red px-4 py-3 text-base font-semibold text-white shadow-[var(--shadow-red)]"
+            <DirectionsButton
+              targets={targets}
+              className="mt-2 mb-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-red px-4 py-3 text-base font-semibold text-white shadow-[var(--shadow-red)]"
             >
               <Navigation className="h-4 w-4" />
               Yol Tarifi Al
-            </a>
+            </DirectionsButton>
           </nav>
         </div>
       ) : null}
