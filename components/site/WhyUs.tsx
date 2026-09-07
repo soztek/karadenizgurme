@@ -24,7 +24,7 @@ export function WhyUs({
           {features.map((f) => (
             <div
               key={f.title}
-              className="rounded-[var(--radius-card)] border border-cream/12 bg-cream/[0.06] p-6 transition-colors hover:bg-cream/10"
+              className="rounded-[var(--radius-card)] border border-cream/10 bg-charcoal p-6 transition-colors hover:border-mustard/30"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-mustard/20 text-mustard-400">
                 <FeatureIcon name={f.icon} className="h-6 w-6" />
